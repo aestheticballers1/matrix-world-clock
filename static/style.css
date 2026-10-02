@@ -1,0 +1,820 @@
+:root {
+    --matrix-green: #00ff41;
+    --matrix-dark: #008f11;
+    --matrix-mid: #00aa2b;
+    --matrix-border: #006b1c;
+    --matrix-faint: #003b0d;
+
+    --card-bg: rgba(0, 10, 2, 0.8);
+    --transition: 0.25s ease;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    min-height: 100vh;
+
+    background: #000;
+
+    color: var(--matrix-green);
+
+    font-family:
+        "Courier New",
+        Consolas,
+        monospace;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================
+   MATRIX BACKGROUND
+   ========================================= */
+
+#matrix {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: -3;
+
+    opacity: 0.25;
+}
+
+
+body::before {
+    content: "";
+
+    position: fixed;
+    inset: 0;
+
+    z-index: -2;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(0, 255, 65, 0.08),
+            transparent 60%
+        );
+}
+
+
+.scanlines {
+    position: fixed;
+    inset: 0;
+
+    z-index: 100;
+
+    pointer-events: none;
+
+    opacity: 0.35;
+
+    background:
+        repeating-linear-gradient(
+            to bottom,
+            rgba(0, 255, 65, 0.025) 0,
+            rgba(0, 255, 65, 0.025) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.site-header {
+    width: 90%;
+    max-width: 1400px;
+
+    margin: auto;
+    padding: 55px 20px 35px;
+
+    text-align: center;
+}
+
+
+.system-label {
+    margin-bottom: 15px;
+
+    color: var(--matrix-dark);
+
+    font-size: 0.75rem;
+    letter-spacing: 5px;
+}
+
+
+h1 {
+    color: var(--matrix-green);
+
+    font-size: clamp(2.2rem, 7vw, 5rem);
+
+    letter-spacing: 12px;
+
+    text-shadow:
+        0 0 5px var(--matrix-green),
+        0 0 15px var(--matrix-green),
+        0 0 35px var(--matrix-green),
+        0 0 70px var(--matrix-green);
+
+    animation: flicker 5s infinite;
+}
+
+
+.subtitle {
+    margin-top: 15px;
+
+    color: var(--matrix-mid);
+
+    font-size: 0.8rem;
+    letter-spacing: 5px;
+}
+
+
+/* =========================================
+   STATS
+   ========================================= */
+
+.stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 30px;
+
+    margin-top: 30px;
+
+    color: var(--matrix-dark);
+
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+}
+
+
+.stats strong {
+    color: var(--matrix-green);
+}
+
+
+.online {
+    text-shadow:
+        0 0 8px var(--matrix-green);
+}
+
+
+/* =========================================
+   SEARCH
+   ========================================= */
+
+.search-panel {
+    width: 100%;
+    max-width: 700px;
+
+    margin: 35px auto 0;
+
+    text-align: left;
+}
+
+
+.search-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: var(--matrix-dark);
+
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+}
+
+
+.search-box {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    border:
+        1px solid
+        var(--matrix-border);
+
+    background:
+        rgba(0, 10, 2, 0.9);
+
+    box-shadow:
+        0 0 10px
+        rgba(0, 255, 65, 0.08);
+
+    transition:
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+
+.search-box:focus-within {
+    border-color: var(--matrix-green);
+
+    box-shadow:
+        0 0 15px
+        rgba(0, 255, 65, 0.25);
+}
+
+
+.search-icon {
+    padding-left: 15px;
+
+    color: var(--matrix-green);
+
+    font-size: 0.9rem;
+}
+
+
+#clock-search {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 15px 12px;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: var(--matrix-green);
+
+    font-family:
+        "Courier New",
+        Consolas,
+        monospace;
+
+    font-size: 0.8rem;
+
+    letter-spacing: 1px;
+}
+
+
+#clock-search::placeholder {
+    color: var(--matrix-border);
+}
+
+
+#clock-search::-webkit-search-cancel-button {
+    display: none;
+}
+
+
+#clear-search {
+    width: 45px;
+    height: 45px;
+
+    border: 0;
+
+    background: transparent;
+
+    color: var(--matrix-dark);
+
+    font-family: inherit;
+
+    font-size: 1.5rem;
+
+    cursor: pointer;
+}
+
+
+#clear-search:hover {
+    color: var(--matrix-green);
+
+    text-shadow:
+        0 0 8px var(--matrix-green);
+}
+
+
+.search-info {
+    display: flex;
+    justify-content: space-between;
+
+    margin-top: 8px;
+
+    color: #005c14;
+
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+}
+
+
+/* =========================================
+   COUNTRY CONTAINER
+   ========================================= */
+
+.country-container {
+    width: 92%;
+    max-width: 1500px;
+
+    margin: 20px auto 60px;
+}
+
+
+/* =========================================
+   COUNTRY SECTION
+   ========================================= */
+
+.country-section {
+    margin-bottom: 45px;
+
+    padding-bottom: 30px;
+
+    border-bottom:
+        1px solid
+        rgba(0, 255, 65, 0.12);
+}
+
+
+.country-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+
+    padding: 15px 20px;
+
+    border-left:
+        3px solid
+        var(--matrix-green);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(0, 255, 65, 0.08),
+            transparent
+        );
+}
+
+
+.country-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+.country-flag {
+    font-size: 2.8rem;
+
+    line-height: 1;
+}
+
+
+.country-code {
+    color: var(--matrix-green);
+
+    font-size: 1.4rem;
+
+    font-weight: bold;
+
+    letter-spacing: 5px;
+
+    text-shadow:
+        0 0 8px var(--matrix-green);
+}
+
+
+.country-name {
+    margin-top: 3px;
+
+    color: var(--matrix-mid);
+
+    font-size: 0.75rem;
+
+    letter-spacing: 2px;
+}
+
+
+.timezone-count {
+    color: var(--matrix-dark);
+
+    font-size: 0.65rem;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================
+   TIMEZONE GRID
+   ========================================= */
+
+.timezone-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fill,
+            minmax(280px, 1fr)
+        );
+
+    gap: 18px;
+}
+
+
+/* =========================================
+   CLOCK CARD
+   ========================================= */
+
+.clock-card {
+    position: relative;
+
+    min-width: 0;
+
+    padding: 18px;
+
+    overflow: hidden;
+
+    border:
+        1px solid
+        var(--matrix-border);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(0, 255, 65, 0.07),
+            rgba(0, 0, 0, 0.94)
+        );
+
+    box-shadow:
+        0 0 10px
+        rgba(0, 255, 65, 0.12),
+
+        inset 0 0 25px
+        rgba(0, 255, 65, 0.03);
+
+    transition:
+        transform var(--transition),
+        border-color var(--transition),
+        box-shadow var(--transition);
+}
+
+
+.clock-card:hover {
+    transform: translateY(-5px);
+
+    border-color: var(--matrix-green);
+
+    box-shadow:
+        0 0 20px
+        rgba(0, 255, 65, 0.3);
+}
+
+
+.clock-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: -100%;
+
+    width: 100%;
+    height: 1px;
+
+    background: var(--matrix-green);
+
+    box-shadow:
+        0 0 15px var(--matrix-green);
+
+    animation: scan 4s linear infinite;
+}
+
+
+/* =========================================
+   CLOCK
+   ========================================= */
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+
+    color: var(--matrix-dark);
+
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+}
+
+
+.status-dot {
+    color: var(--matrix-green);
+
+    text-shadow:
+        0 0 5px var(--matrix-green);
+}
+
+
+.clock {
+    width: 100%;
+    min-width: 0;
+
+    padding: 22px 8px;
+
+    overflow: hidden;
+
+    text-align: center;
+
+    border:
+        1px solid
+        rgba(0, 255, 65, 0.25);
+
+    background: var(--card-bg);
+}
+
+
+.clock-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #007a18;
+
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+}
+
+
+.clock-time {
+    display: block;
+
+    width: 100%;
+
+    overflow: hidden;
+
+    color: var(--matrix-green);
+
+    font-size:
+        clamp(
+            1.35rem,
+            4vw,
+            2.35rem
+        );
+
+    font-weight: bold;
+
+    line-height: 1.2;
+
+    letter-spacing: 2px;
+
+    white-space: nowrap;
+
+    text-shadow:
+        0 0 5px var(--matrix-green),
+        0 0 12px var(--matrix-green),
+        0 0 25px var(--matrix-green);
+}
+
+
+.date {
+    display: block;
+
+    margin-top: 8px;
+
+    color: var(--matrix-dark);
+
+    font-size: 0.7rem;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================
+   TIMEZONE INFORMATION
+   ========================================= */
+
+.timezone-location {
+    margin-top: 18px;
+
+    color: var(--matrix-green);
+
+    font-size: 0.9rem;
+
+    font-weight: bold;
+
+    letter-spacing: 3px;
+}
+
+
+.timezone-name {
+    margin-top: 5px;
+
+    overflow: hidden;
+
+    color: #005c14;
+
+    font-size: 0.6rem;
+
+    letter-spacing: 1px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.card-footer {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 15px;
+
+    padding-top: 12px;
+
+    border-top:
+        1px solid
+        rgba(0, 255, 65, 0.1);
+
+    color: var(--matrix-border);
+
+    font-size: 0.6rem;
+
+    letter-spacing: 1px;
+}
+
+
+.signal {
+    color: var(--matrix-mid);
+}
+
+
+/* =========================================
+   NO RESULTS
+   ========================================= */
+
+.no-results {
+    padding: 70px 20px;
+
+    border:
+        1px solid
+        var(--matrix-border);
+
+    text-align: center;
+
+    color: var(--matrix-dark);
+}
+
+
+.no-results strong {
+    display: block;
+
+    margin-bottom: 12px;
+
+    color: var(--matrix-green);
+
+    font-size: 1.2rem;
+
+    letter-spacing: 3px;
+}
+
+
+.no-results span {
+    font-size: 0.7rem;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+footer {
+    padding: 30px;
+
+    text-align: center;
+
+    color: var(--matrix-border);
+
+    font-size: 0.75rem;
+
+    letter-spacing: 5px;
+}
+
+
+.footer-sub {
+    margin-top: 10px;
+
+    color: var(--matrix-faint);
+
+    font-size: 0.55rem;
+
+    letter-spacing: 3px;
+}
+
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes scan {
+
+    from {
+        left: -100%;
+    }
+
+    to {
+        left: 100%;
+    }
+
+}
+
+
+@keyframes flicker {
+
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+        opacity: 1;
+    }
+
+    20%,
+    24%,
+    55% {
+        opacity: 0.75;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .site-header {
+        padding-top: 35px;
+    }
+
+
+    h1 {
+        letter-spacing: 5px;
+    }
+
+
+    .subtitle {
+        letter-spacing: 2px;
+    }
+
+
+    .stats {
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+
+    .country-header {
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+
+    .timezone-count {
+        text-align: right;
+    }
+
+
+    .timezone-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    .clock-time {
+        font-size: 1.8rem;
+    }
+
+}

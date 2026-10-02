@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Matrix themed world clock displaying global time zones."
+    >
+
+    <title>WORLD CLOCK // MATRIX</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+    <canvas
+        id="matrix"
+        aria-hidden="true"
+    ></canvas>
+
+    <div
+        class="scanlines"
+        aria-hidden="true"
+    ></div>
+
+
+    <!-- =====================================
+         HEADER
+         ===================================== -->
+
+    <header class="site-header">
+
+        <p class="system-label">
+            // GLOBAL TIME NETWORK //
+        </p>
+
+        <h1>WORLD CLOCK</h1>
+
+        <p class="subtitle">
+            THE MATRIX // TEMPORAL DATABASE
+        </p>
+
+
+        <div class="stats">
+
+            <span>
+                COUNTRIES:
+                <strong>{{ country_count }}</strong>
+            </span>
+
+            <span>
+                TIMEZONES:
+                <strong>{{ timezone_count }}</strong>
+            </span>
+
+            <span>
+                STATUS:
+                <strong class="online">
+                    ● ONLINE
+                </strong>
+            </span>
+
+        </div>
+
+
+        <!-- =================================
+             SEARCH
+             ================================= -->
+
+        <div class="search-panel">
+
+            <label
+                for="clock-search"
+                class="search-label"
+            >
+                // SEARCH TIME NETWORK
+            </label>
+
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    &gt;_
+                </span>
+
+
+                <input
+                    id="clock-search"
+                    type="search"
+                    placeholder="Search country, city, code or timezone..."
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+
+
+                <button
+                    id="clear-search"
+                    type="button"
+                    aria-label="Clear search"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="search-info">
+
+                <span id="result-count">
+                    SHOWING {{ country_count }} COUNTRIES
+                </span>
+
+                <span>
+                    [ESC] CLEAR
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================
+         COUNTRY DATABASE
+         ===================================== -->
+
+    <main class="country-container">
+
+
+        {% for country in countries %}
+
+
+        <section
+    class="country-section"
+
+    data-country="{{ country.name | lower }}"
+
+    data-code="{{ country.code | lower }}"
+
+    data-locations="{% for timezone in country.timezones %}{{ timezone.location | lower }}|{% endfor %}"
+
+    data-timezones="{% for timezone in country.timezones %}{{ timezone.timezone | lower }}|{% endfor %}"
+>
+
+        >
+
+
+            <!-- COUNTRY HEADER -->
+
+            <div class="country-header">
+
+
+                <div class="country-title">
+
+
+                    <span class="country-flag">
+                        {{ country.flag }}
+                    </span>
+
+
+                    <div>
+
+                        <div class="country-code">
+                            {{ country.code }}
+                        </div>
+
+                        <div class="country-name">
+                            {{ country.name }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="timezone-count">
+
+                    {{ country.timezones | length }}
+
+                    TIMEZONE{% if country.timezones | length != 1 %}S{% endif %}
+
+                </div>
+
+
+            </div>
+
+
+            <!-- TIMEZONE GRID -->
+
+            <div class="timezone-grid">
+
+
+                {% for timezone in country.timezones %}
+
+
+                <article
+                    class="clock-card"
+                    data-timezone="{{ timezone.timezone }}"
+                    data-location="{{ timezone.location | lower }}"
+                >
+
+
+                    <div class="card-header">
+
+                        <span>
+                            // TIME NODE
+                        </span>
+
+                        <span class="status-dot">
+                            ●
+                        </span>
+
+                    </div>
+
+
+                    <div class="clock">
+
+
+                        <span class="clock-label">
+                            LOCAL TIME
+                        </span>
+
+
+                        <time class="clock-time">
+                            00:00:00
+                        </time>
+
+
+                        <span class="date">
+                            --/--/----
+                        </span>
+
+
+                    </div>
+
+
+                    <div class="timezone-location">
+
+                        {{ timezone.location }}
+
+                    </div>
+
+
+                    <div class="timezone-name">
+
+                        {{ timezone.timezone }}
+
+                    </div>
+
+
+                    <div class="card-footer">
+
+                        <span>
+                            STATUS: ACTIVE
+                        </span>
+
+                        <span class="signal">
+                            ▓▓▓▓▓
+                        </span>
+
+                    </div>
+
+
+                </article>
+
+
+                {% endfor %}
+
+
+            </div>
+
+
+        </section>
+
+
+        {% endfor %}
+
+
+        <!-- NO RESULTS -->
+
+        <div
+            id="no-results"
+            class="no-results"
+            hidden
+        >
+
+            <strong>
+                NO TIME NODE FOUND
+            </strong>
+
+            <span>
+                THE SYSTEM COULD NOT LOCATE
+                THE REQUESTED TIMEZONE
+            </span>
+
+        </div>
+
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            WAKE UP, NEO...
+        </p>
+
+        <p class="footer-sub">
+            THE SYSTEM IS WATCHING
+        </p>
+
+    </footer>
+
+
+    <script
+        src="{{ url_for('static', filename='script.js') }}"
+    ></script>
+
+</body>
+
+</html>
